@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>AMOEBA</groupId>
+		<artifactId>AMOEBA-parent</artifactId>
+		<version>1.0</version>
+	</parent>
+	<artifactId>AMAKFX</artifactId>
+	<packaging>jar</packaging>
+
+	<properties>
+		<skip.assembly>false</skip.assembly>
+		<main.class>fr.irit.smac.amak.examples.philosophers.PhilosophersLaunchExample</main.class>
+	</properties>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>tests</testSourceDirectory>
+	</build>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jfreechart-fx</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
+		<!-- Local jars dependencies -->
+		<dependency>
+			<groupId>agent-messaging</groupId>
+			<artifactId>agent-messagingt</artifactId>
+			<version>0.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/AdditionalLibraries/agent-messaging-0.2.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>avt</groupId>
+			<artifactId>avt</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/AdditionalLibraries/avt.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/AdditionalLibraries/json-simple-1.1.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.10</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/AdditionalLibraries/xstream-1.4.10.jar</systemPath>
+		</dependency>
+	</dependencies>
+</project>
