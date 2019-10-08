@@ -13,9 +13,11 @@ import java.util.stream.Collectors;
 
 import fr.irit.smac.amak.tools.Log;
 import fr.irit.smac.amak.tools.RunLaterHelper;
+import fr.irit.smac.amak.ui.AmasMultiUIWindow;
 import fr.irit.smac.amak.ui.MainWindow;
 import fr.irit.smac.amak.ui.SchedulerToolbar;
 import fr.irit.smac.amak.ui.VUI;
+import fr.irit.smac.amak.ui.VUIMulti;
 
 /**
  * This class must be overridden by multi-agent systems
@@ -26,6 +28,10 @@ import fr.irit.smac.amak.ui.VUI;
  *            The environment of the MAS
  */
 public class Amas<E extends Environment> implements Schedulable {
+	
+	public AmasMultiUIWindow amasMultiUIWindow;
+	public VUIMulti vuiMulti;
+	
 	/**
 	 * List of agents present in the system
 	 */
@@ -142,6 +148,43 @@ public class Amas<E extends Environment> implements Schedulable {
 				MainWindow.addToolbar(new SchedulerToolbar("Amas #" + id, getScheduler()));
 			}
 		}
+		this.scheduler.lock();
+		this.params = params;
+		this.environment = environment;
+		this.onInitialConfiguration();
+		executionPolicy = Configuration.executionPolicy;
+		this.onInitialAgentsCreation();
+
+		addPendingAgents();
+		this.onReady();
+		if (!Configuration.commandLineMode)
+			this.onRenderingInitialization();
+		this.scheduler.unlock();
+	}
+	
+	public Amas(AmasMultiUIWindow window, VUIMulti vui, E environment, Scheduling scheduling, Object... params) {
+		
+		if(!Configuration.commandLineMode) {
+			amasMultiUIWindow = window;
+			vuiMulti = vui;
+			amasMultiUIWindow.addTabbedPanel(vuiMulti.title, vuiMulti.getPanel());
+		}
+		
+		
+		executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(Configuration.allowedSimultaneousAgentsExecution);
+		
+		//this.scheduler = environment.getScheduler();
+		if (scheduling == Scheduling.DEFAULT) {
+
+			this.scheduler = Scheduler.getDefaultMultiUIScheduler(window);
+			this.scheduler.add(this);
+		} else {
+			this.scheduler = new Scheduler(this);
+			if (scheduling == Scheduling.UI && !Configuration.commandLineMode) {
+				amasMultiUIWindow.addToolbar(new SchedulerToolbar("Amas #" + id, getScheduler()));
+			}
+		}
+		
 		this.scheduler.lock();
 		this.params = params;
 		this.environment = environment;
@@ -371,7 +414,19 @@ public class Amas<E extends Environment> implements Schedulable {
 	 * {@link Amas#onRenderingInitialization}
 	 */
 	protected void onUpdateRender() {
-		VUI.get().updateCanvas();
+		if(Configuration.multiUI) {
+			vuiMulti.updateCanvas();
+		}else {
+			VUI.get().updateCanvas();
+		}
+		
+	}
+	
+	
+
+	
+	public VUIMulti getVUIMulti() {
+		return vuiMulti;
 	}
 
 	/**

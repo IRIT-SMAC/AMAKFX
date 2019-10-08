@@ -15,7 +15,7 @@ public class DrawablePoint extends Drawable {
 	private SVGPath svg = new SVGPath();
 	
 	public DrawablePoint(double dx, double dy) {
-		super(dx, dy, 0.5, 0.5);
+		super(dx, dy, 0.1, 0.1);
 		svg.setContent("M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z");
 		getNode().addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>() {
 			@Override

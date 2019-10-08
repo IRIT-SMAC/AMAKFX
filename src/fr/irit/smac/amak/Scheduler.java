@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
+import fr.irit.smac.amak.ui.AmasMultiUIWindow;
 import fr.irit.smac.amak.ui.MainWindow;
 import fr.irit.smac.amak.ui.SchedulerToolbar;
 
@@ -59,6 +60,8 @@ public class Scheduler implements Runnable, Serializable {
 	 * The default scheduler
 	 */
 	private static Scheduler defaultScheduler;
+	
+
 	/**
 	 * The schedulables that must be added
 	 */
@@ -117,6 +120,19 @@ public class Scheduler implements Runnable, Serializable {
 			}
 		}
 		return defaultScheduler;
+	}
+	
+	
+	
+	
+	
+	public static Scheduler getDefaultMultiUIScheduler(AmasMultiUIWindow window) {
+		Scheduler multiUIScheduler = new Scheduler();
+			if (!Configuration.commandLineMode) {
+				SchedulerToolbar st = new SchedulerToolbar("Default", multiUIScheduler);
+				window.addToolbar(st);
+			}
+		return multiUIScheduler;
 	}
 
 	/**

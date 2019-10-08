@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.irit.smac.amak.tools.RunLaterHelper;
 import fr.irit.smac.amak.ui.VUI;
+import fr.irit.smac.amak.ui.VUIMulti;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -67,6 +68,8 @@ public abstract class Drawable {
 	 * The VUI on which the object is drawn
 	 */
 	protected VUI vui;
+	
+	protected VUIMulti vuiMulti;
 	
 	/**
 	 * The order of drawing. An higher layer is drawn on top of the other.
@@ -153,7 +156,8 @@ public abstract class Drawable {
 		if (isFixed())
 			return width;
 		else
-			return vui.worldToScreenDistance(width);
+			return vui != null ? vui.worldToScreenDistance(width) : vuiMulti.worldToScreenDistance(width);
+		
 	}
 
 	/**
@@ -176,7 +180,7 @@ public abstract class Drawable {
 		if (isFixed())
 			return height;
 		else
-			return vui.worldToScreenDistance(height);
+			return vui != null ? vui.worldToScreenDistance(height) : vuiMulti.worldToScreenDistance(height);
 	}
 
 	/**
@@ -283,6 +287,10 @@ public abstract class Drawable {
 	public void setVUI(VUI vectorialUI) {
 		vui = vectorialUI;
 	}
+	
+	public void setVUIMulti(VUIMulti vectorialUI) {
+		vuiMulti = vectorialUI;
+	}
 
 	/**
 	 * Get the top y coordinate
@@ -293,7 +301,7 @@ public abstract class Drawable {
 		if (isFixed())
 			return y - height / 2;
 		else
-			return vui.worldToScreenY(y - height / 2);
+			return vui != null ? vui.worldToScreenY(y - height / 2) : vuiMulti.worldToScreenY(y - height / 2);
 	}
 
 	/**
@@ -305,7 +313,8 @@ public abstract class Drawable {
 		if (isFixed())
 			return x - width / 2;
 		else
-			return vui.worldToScreenX(x - width / 2);
+			return vui != null ? vui.worldToScreenX(x - width / 2) : vuiMulti.worldToScreenX(x - width / 2);
+		
 	}
 
 	/**
@@ -317,7 +326,7 @@ public abstract class Drawable {
 		if (isFixed())
 			return y + height / 2;
 		else
-			return vui.worldToScreenY(y + height / 2);
+			return vui != null ? vui.worldToScreenY(y + height / 2) : vuiMulti.worldToScreenY(y + height / 2);
 	}
 
 	/**
@@ -329,7 +338,7 @@ public abstract class Drawable {
 		if (isFixed())
 			return x + width / 2;
 		else
-			return vui.worldToScreenX(x + width / 2);
+			return vui != null ? vui.worldToScreenX(x + width / 2) : vuiMulti.worldToScreenX(x + width / 2);
 	}
 
 	/**
@@ -438,7 +447,11 @@ public abstract class Drawable {
 	 * Remove the drawable from its VUI
 	 */
 	public void delete() {
-		vui.remove(this);
+		if(vui != null)
+			vui.remove(this);
+		
+		if(vuiMulti != null)
+			vuiMulti.remove(this);
 	}
 
 	/**

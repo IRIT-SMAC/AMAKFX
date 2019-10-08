@@ -23,13 +23,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
- * A piece of GUI allowing to see and look for contexts.
+ * A piece of GUI allowing to see and look for agents.
  * @author Hugo
  *
  */
 public class VuiExplorer extends ScrollPane {
 
-	private VUI vui;
+	private VUI vui = null;
+	private VUIMulti vuiMulti = null;
 	
 	private VBox vbox;
 	private TitledPane contextsPane;
@@ -102,6 +103,74 @@ public class VuiExplorer extends ScrollPane {
 		RunLaterHelper.runLater(()->vui.getPanel().setLeft(this));
 
 	}
+	
+	
+	public VuiExplorer(VUIMulti vuiMlt) {
+		this.vuiMulti = vuiMlt;
+
+		this.setMaxWidth(Double.MAX_VALUE);
+		this.setMaxHeight(Double.MAX_VALUE);
+
+		vbox = new VBox();
+		vbox.setFillWidth(true);
+		this.setContent(vbox);
+
+		// refresh, close, and collapseAll button
+		HBox hboxButtons = new HBox();
+		Button refresh = new Button("Refresh");
+		refresh.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				update();
+			}
+		});
+		Button close = new Button("Close");
+		close.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				vuiMulti.getPanel().setLeft(null);
+			}
+		});
+		Button collapseAll = new Button("Collapse all");
+		collapseAll.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				collapseAll();
+			}
+		});
+		hboxButtons.getChildren().addAll(refresh, close, collapseAll);
+		
+		// check box
+		autoRefresh = new CheckBox("Auto refresh");
+		autoRefresh.setTooltip(new Tooltip("Try to automatically refresh the VUI explorer when the VUI is updated."));
+		
+		// search bar
+		search = new TextField();
+		search.setPromptText("regular expression");
+		// update list on change
+		search.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				search.setStyle(null);
+				try {
+					update();
+				} catch (PatternSyntaxException ex) {
+					search.setStyle("-fx-border-color: red;");
+				}
+			}
+		});
+
+		cpVBox = new VBox();
+		contextsPane = new TitledPane("Drawables", cpVBox);
+
+		vbox.getChildren().addAll(hboxButtons, autoRefresh, search, contextsPane);
+		update();
+		
+		// Add to vui
+		RunLaterHelper.runLater(()->vuiMulti.getPanel().setLeft(this));
+
+	}
+	
 
 	public void update(boolean auto) {
 		if(auto && autoRefresh.isSelected()) {
@@ -113,7 +182,13 @@ public class VuiExplorer extends ScrollPane {
 	 * Update the list of context
 	 */
 	public void update() {
-		List<Drawable> drawableList = vui.getDrawables();
+		List<Drawable> drawableList = null;
+		if(vui != null) {
+			drawableList = vui.getDrawables();
+		}
+		if(vuiMulti != null) {
+			drawableList = vuiMulti.getDrawables();
+		}
 		// crude color sort
 		drawableList.sort(new Comparator<Drawable>() {
 			@Override
@@ -142,7 +217,13 @@ public class VuiExplorer extends ScrollPane {
 	}
 	
 	private void collapseAll() {
-		List<Drawable> drawableList = vui.getDrawables();
+		List<Drawable> drawableList = null;
+		if(vui != null) {
+			drawableList = vui.getDrawables();
+		}
+		if(vuiMulti != null) {
+			drawableList = vuiMulti.getDrawables();
+		}
 		for(Drawable d : drawableList) {
 			if(d.showInExplorer && d.isVisible()) {
 				Drawable mini = d.getLinkedDrawable("mini");

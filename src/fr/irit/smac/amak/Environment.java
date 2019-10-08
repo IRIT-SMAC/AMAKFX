@@ -2,6 +2,7 @@ package fr.irit.smac.amak;
 
 import java.util.Random;
 
+import fr.irit.smac.amak.ui.AmasMultiUIWindow;
 import fr.irit.smac.amak.ui.MainWindow;
 import fr.irit.smac.amak.ui.SchedulerToolbar;
 
@@ -12,6 +13,8 @@ import fr.irit.smac.amak.ui.SchedulerToolbar;
  *
  */
 public abstract class Environment implements Schedulable {
+	
+	public AmasMultiUIWindow amasMultiUIWindow;
 
 	/**
 	 * Unique index to give unique id to each environment
@@ -60,6 +63,26 @@ public abstract class Environment implements Schedulable {
 		if (!Configuration.commandLineMode)
 			onRenderingInitialization();
 		this.scheduler.unlock();
+	}
+	
+	public Environment(AmasMultiUIWindow window, Scheduling _scheduling, Object... params) {
+		amasMultiUIWindow = window;
+//		if (_scheduling == Scheduling.DEFAULT) {
+//			this.scheduler = Scheduler.getDefaultMultiUIScheduler(window);
+//			this.scheduler.add(this);
+//		} else {
+//		this.scheduler = new Scheduler(this);
+//		if (_scheduling == Scheduling.UI && !Configuration.commandLineMode)
+//			amasMultiUIWindow.addToolbar(new SchedulerToolbar("Environment #" + id, getScheduler()));
+//		}
+//
+//		this.scheduler.lock();
+		this.params = params;
+		onInitialization();
+		onInitialEntitiesCreation();
+		if (!Configuration.commandLineMode)
+			onRenderingInitialization();
+//		this.scheduler.unlock();
 	}
 
 	/**
@@ -142,4 +165,6 @@ public abstract class Environment implements Schedulable {
 	@Override
 	public void onSchedulingStops() {
 	}
+	
+
 }

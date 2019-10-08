@@ -36,6 +36,10 @@ public class AmakPlot {
 	public static void add(AmakPlot chart) {
 		MainWindow.addTabbedPanel(chart.name, new ChartViewer(chart.chart));
 	}
+	
+	public static void add(AmasMultiUIWindow window, AmakPlot chart) {
+		window.addTabbedPanel(chart.name, new ChartViewer(chart.chart));
+	}
 	/* ----- */
 	
 	private String name;
@@ -117,6 +121,79 @@ public class AmakPlot {
 	 */
 	public AmakPlot(String name, JFreeChart chart) {
 		this(name, chart, true);
+	}
+	
+	
+	/**
+	 * Create a chart
+	 * @param name the name of the chart, used as the tab name.
+	 * @param chartType {@link ChartType#LINE} or {@link ChartType#BAR}
+	 * @param xAxisLabel label for the x (horizontal) axis 
+	 * @param yAxisLabel label for the y (vertical) axis
+	 * @param autoAdd automatically make an {@link AmakPlot#add(AmakPlot)} call ?
+	 */
+	public AmakPlot(AmasMultiUIWindow window, String name, ChartType chartType, String xAxisLabel, String yAxisLabel, boolean autoAdd) {
+		this.name = name;
+		seriesCollection = new XYSeriesCollection();
+		switch (chartType) {
+		case BAR:
+			chart = ChartFactory.createXYBarChart(name, xAxisLabel, false, yAxisLabel, seriesCollection);
+			break;
+		case LINE:
+			chart = ChartFactory.createXYLineChart(name, xAxisLabel, yAxisLabel, seriesCollection);
+			if(useSamplingRenderer) {
+				chart.getXYPlot().setRenderer(new SamplingXYLineRenderer());
+			}
+			XYPlot plot = (XYPlot)chart.getPlot();
+			plot.setDomainGridlinesVisible(true);
+	        plot.setDomainGridlinePaint(Color.lightGray);
+	        plot.setRangeGridlinePaint(Color.lightGray);
+			break;
+		default:
+			System.err.println("AmakPlot : unknow ChartType \""+chartType+"\".");
+			break;
+		}
+		chart.setAntiAlias(false);
+		chart.getPlot().setBackgroundPaint(Color.WHITE);
+		if(autoAdd) {
+			add(window, this);
+		}
+	}
+	
+	/**
+	 * Create a chart and add it to the main window.
+	 * @param name the name of the chart, used as the tab name.
+	 * @param chartType {@link ChartType#LINE} or {@link ChartType#BAR}
+	 * @param xAxisLabel label for the x (horizontal) axis 
+	 * @param yAxisLabel label for the y (vertical) axis
+	 */
+	public AmakPlot(AmasMultiUIWindow window, String name, ChartType chartType, String xAxisLabel, String yAxisLabel) {
+		this(window, name, chartType, xAxisLabel, yAxisLabel, true);
+	}
+	
+	
+	/**
+	 * Create a chart out of a JFreeChart.
+	 * Make sure that your chart use an {@link XYSeriesCollection} as dataset.
+	 * @param name the name of the chart, used as the tab name.
+	 * @param chart the {@link JFreeChart} using a {@link XYSeriesCollection} for dataset.
+	 * @param autoAdd automatically make an {@link AmakPlot#add(AmakPlot)} call ?
+	 */
+	public AmakPlot(AmasMultiUIWindow window, String name, JFreeChart chart, boolean autoAdd) {
+		this.name = name;
+		this.seriesCollection = (XYSeriesCollection) chart.getXYPlot().getDataset();
+		this.chart = chart;
+		add(window, this);
+	}
+	
+	/**
+	 * Create a chart out of a JFreeChart and add it to the main window.
+	 * Make sure that your chart use an {@link XYSeriesCollection} as dataset.
+	 * @param name the name of the chart, used as the tab name.
+	 * @param chart the {@link JFreeChart} using a {@link XYSeriesCollection} for dataset.
+	 */
+	public AmakPlot(AmasMultiUIWindow window, String name, JFreeChart chart) {
+		this(window, name, chart, true);
 	}
 	
 	public String getName() {

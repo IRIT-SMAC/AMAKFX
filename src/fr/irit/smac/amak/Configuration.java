@@ -47,4 +47,6 @@ public class Configuration {
 	 * By default AMAK will wait for 1 sec before updating the plots
 	 */
 	public static double plotMilliSecondsUpdate = 1000;
+	
+	public static boolean multiUI = false;
 }
