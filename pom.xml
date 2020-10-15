@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd%22%3E">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd%22%3E">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>AMAKFXID</groupId>
@@ -34,7 +34,38 @@
 		</dependency>
 
 
+		<!-- Local jars dependencies -->
+		<dependency>
+			<groupId>agent-messaging</groupId>
+			<artifactId>agent-messagingt</artifactId>
+			<version>0.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/AdditionalLibraries/agent-messaging-0.2.jar</systemPath>
+		</dependency>
 
+		<dependency>
+			<groupId>avt</groupId>
+			<artifactId>avt</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/AdditionalLibraries/avt.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/AdditionalLibraries/json-simple-1.1.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.10</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/AdditionalLibraries/xstream-1.4.10.jar</systemPath>
+		</dependency>
 
 
 	</dependencies>
