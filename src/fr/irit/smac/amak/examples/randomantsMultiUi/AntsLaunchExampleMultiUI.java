@@ -46,7 +46,6 @@ public class AntsLaunchExampleMultiUI extends Application{
 		AntHillExampleMultiUI ants2 = new AntHillExampleMultiUI(window2, new VUIMulti("Ants VUI 2"), env2);
 		
 		startTask(ants, 500, 10);
-		
 		startTask(ants2, 250, 30);
 		
 		
