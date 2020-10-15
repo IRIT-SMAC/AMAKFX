@@ -3,8 +3,9 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-
+	<groupId>AMAKFXID</groupId>
 	<artifactId>AMAKFX</artifactId>
+
 	<packaging>jar</packaging>
 
 	<properties>
@@ -19,11 +20,16 @@
 
 	<dependencies>
 
+
+
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
 		<dependency>
-			<groupId>org.jfree</groupId>
-			<artifactId>jfreechart-fx</artifactId>
-			<version>1.0.1</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.6.2</version>
+			<scope>test</scope>
 		</dependency>
+
 
 		<!-- Local jars dependencies -->
 		<dependency>
@@ -57,5 +63,28 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/AdditionalLibraries/xstream-1.4.10.jar</systemPath>
 		</dependency>
+
+
+
+
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jfreechart-fx</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+
 	</dependencies>
+	<version>0.01</version>
 </project>
