@@ -4,6 +4,8 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+import java.util.ArrayList;
+
 public class DrawableCircle extends Drawable {
 	private Circle circle;
 	
@@ -39,6 +41,11 @@ public class DrawableCircle extends Drawable {
 	@Override
 	public Node getNode() {
 		return circle;
+	}
+
+	@Override
+	public ArrayList<Node> getNodes() {
+		return null;
 	}
 
 

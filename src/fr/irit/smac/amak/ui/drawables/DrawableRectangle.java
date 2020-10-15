@@ -5,6 +5,8 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+
 public class DrawableRectangle extends Drawable {
 	public Rectangle rectangle;
 
@@ -47,5 +49,10 @@ public class DrawableRectangle extends Drawable {
 	@Override
 	public Node getNode() {
 		return rectangle;
+	}
+
+	@Override
+	public ArrayList<Node> getNodes() {
+		return null;
 	}
 }

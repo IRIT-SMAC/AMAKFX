@@ -4,6 +4,8 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 
+import java.util.ArrayList;
+
 public class DrawableOval extends Drawable {
 	Ellipse ellipse;
 	
@@ -40,5 +42,10 @@ public class DrawableOval extends Drawable {
 	@Override
 	public Node getNode() {
 		return ellipse;
+	}
+
+	@Override
+	public ArrayList<Node> getNodes() {
+		return null;
 	}
 }

@@ -136,14 +136,29 @@ public abstract class Drawable {
 	 * Must be called AFTER the node for your drawable has been created.
 	 */
 	protected void defaultInit() {
-		getNode().setStyle(defaultStyle);
-		
-		getNode().addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				dispatchEvent(event);
+		if(getNode()==null){
+			ArrayList<Node> nodes = getNodes();
+			for(Node n : nodes){
+				n.setStyle(defaultStyle);
+
+				n.addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						dispatchEvent(event);
+					}
+				});
 			}
-		});
+		}else{
+			getNode().setStyle(defaultStyle);
+
+			getNode().addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					dispatchEvent(event);
+				}
+			});
+		}
+
 	}
 	
 	/**
@@ -442,6 +457,12 @@ public abstract class Drawable {
 	 * @return
 	 */
 	public abstract Node getNode();
+
+	/**
+	 * The graphical element that is displayed
+	 * @return
+	 */
+	public abstract ArrayList<Node> getNodes();
 	
 	/**
 	 * Remove the drawable from its VUI
@@ -510,7 +531,14 @@ public abstract class Drawable {
 	 * @param event
 	 */
 	protected void onMouseExited(MouseEvent event) {
-		getNode().setStyle(defaultStyle);
+		if(getNode()==null){
+			ArrayList <Node> nodes = getNodes();
+			for(Node n : nodes){
+				n.setStyle(defaultStyle);
+			}
+		}else{
+			getNode().setStyle(defaultStyle);
+		}
 	}
 
 	/**
@@ -518,7 +546,15 @@ public abstract class Drawable {
 	 * @param event
 	 */
 	protected void onMouseEntered(MouseEvent event) {
-		getNode().setStyle("-fx-stroke: black; -fx-stroke-width: 3;");
+		if(getNode()==null){
+			ArrayList <Node> nodes = getNodes();
+			for(Node n : nodes){
+				n.setStyle("-fx-stroke: black; -fx-stroke-width: 3;");
+			}
+		}else{
+			getNode().setStyle("-fx-stroke: black; -fx-stroke-width: 3;");
+		}
+
 	}
 
 	/**

@@ -3,6 +3,8 @@ package fr.irit.smac.amak.ui.drawables;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
+
 public class DrawableString extends Drawable {
 	private Text textZone;
 
@@ -35,5 +37,10 @@ public class DrawableString extends Drawable {
 	@Override
 	public Node getNode() {
 		return textZone;
+	}
+
+	@Override
+	public ArrayList<Node> getNodes() {
+		return null;
 	}
 }

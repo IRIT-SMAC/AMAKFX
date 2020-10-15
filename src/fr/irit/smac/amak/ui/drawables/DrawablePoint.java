@@ -5,6 +5,8 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.SVGPath;
 
+import java.util.ArrayList;
+
 /**
  * Drawable to point things on the VUI, use a '+' icon as graphical representation.
  * @author Hugo
@@ -49,7 +51,12 @@ public class DrawablePoint extends Drawable {
 	public Node getNode() {
 		return svg;
 	}
-	
+
+	@Override
+	public ArrayList<Node> getNodes() {
+		return null;
+	}
+
 	@Override
 	protected void onMouseExited(MouseEvent event) {
 		svg.setScaleX(getRenderedWidth());

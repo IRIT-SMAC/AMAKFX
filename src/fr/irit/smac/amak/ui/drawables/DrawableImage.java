@@ -1,5 +1,6 @@
 package fr.irit.smac.amak.ui.drawables;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,7 +68,12 @@ public class DrawableImage extends Drawable {
 	public Node getNode() {
 		return image;
 	}
-	
+
+	@Override
+	public ArrayList<Node> getNodes() {
+		return null;
+	}
+
 	@Override
 	protected void onMouseEntered(MouseEvent event) {
 		image.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);");

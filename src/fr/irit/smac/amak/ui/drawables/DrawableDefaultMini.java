@@ -8,6 +8,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+
 public class DrawableDefaultMini extends Drawable {
 	
 	private Drawable original;
@@ -77,7 +79,12 @@ public class DrawableDefaultMini extends Drawable {
 	public Node getNode() {
 		return stack;
 	}
-	
+
+	@Override
+	public ArrayList<Node> getNodes() {
+		return null;
+	}
+
 	@Override
 	protected void onMouseEntered(MouseEvent event) {
 		rectangle.setStyle("-fx-stroke: black; -fx-stroke-width: 3;");
